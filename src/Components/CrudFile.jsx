@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 import { useGlobelContext } from "./Context/UserContext";
+import axios from "axios";
 
 const CrudFile = () => {
 
-    const {formData,setFormData,showData,deleteData,saveData,peopleList,isOnline,setIsOnline}=useGlobelContext();
+    const {formData,setFormData,showData,deleteData,saveData,peopleList,isOnline,setIsOnline,setPeopleList,BASE_URL}=useGlobelContext();
 
   useEffect(() => {
     showData(); // Call showData when the component mounts
@@ -23,6 +24,21 @@ const CrudFile = () => {
       window.removeEventListener("offline", handleOnlineStatusChange);
     };
   }, []);
+
+  const dataStoreDB = async (index) => {
+    const localData = JSON.parse(localStorage.getItem("peopleList")) || [];
+  
+    if (index >= 0 && index < localData.length) {
+      const selectedData = localData[index];
+
+      await axios.post(`${BASE_URL}saveUser`, selectedData);
+      deleteData(index);
+      alert("Your Data Saved");
+      console.log("Data to be sent to the database:", selectedData);
+    } else {
+      console.log("Invalid index or no data found at the specified index.");
+    }
+  };
 
   return (
     <div className="container">
@@ -47,7 +63,7 @@ const CrudFile = () => {
               className="form-control"
               id="name"
               placeholder="Enter Name :"
-              required="true"
+              
               value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -83,16 +99,16 @@ const CrudFile = () => {
             />
           </div>
           <div className="form-group col-md-6 mb-3">
-            <label htmlFor="phno">Phone No :</label>
+            <label htmlFor="phone">Phone No :</label>
             <input
               type="text"
-              name="phno"
+              name="phone"
               className="form-control"
-              id="phno"
+              id="phone"
               placeholder="Enter Phone No :"
-              value={formData.phno}
+              value={formData.phone}
               onChange={(e) =>
-                setFormData({ ...formData, phno: e.target.value })
+                setFormData({ ...formData, phone: e.target.value })
               }
             />
           </div>
@@ -141,7 +157,7 @@ const CrudFile = () => {
                 <td>{person.name}</td>
                 <td>{person.email}</td>
                 <td>{person.address}</td>
-                <td>{person.phno}</td>
+                <td>{person.phone}</td>
                 <td>{person.password}</td>
                 <td>
                   <button
@@ -152,7 +168,7 @@ const CrudFile = () => {
                   </button>
                   <button className="btn btn-warning m-2">Edit</button>
                   {isOnline && (
-                    <button className="btn btn-outline-success">Sync</button>
+                    <button className="btn btn-outline-success" onClick={()=>dataStoreDB(index)}>Sync</button>
                   )}
                 </td>
               </tr>

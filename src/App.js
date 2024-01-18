@@ -1,13 +1,13 @@
-import './App.css';
-import { AppProvider } from './Components/Context/UserContext';
-import CrudFile from './Components/CrudFile';
+import "./App.css";
+import { AppProvider } from "./Components/Context/UserContext";
+import CrudFile from "./Components/CrudFile";
 
 function App() {
   return (
     <div className="App">
-    <AppProvider>
-    <CrudFile/>
-    </AppProvider>
+      <AppProvider>
+        <CrudFile />
+      </AppProvider>
     </div>
   );
 }

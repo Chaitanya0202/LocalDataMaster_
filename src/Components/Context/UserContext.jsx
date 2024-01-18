@@ -6,14 +6,14 @@ const AppProvider = ({ children }) => {
 
   const BASE_URL="http://localhost:8080/"
 
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(true);
 
   const [peopleList, setPeopleList] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     address: "",
-    phno: "",
+    phone: "",
     password: "",
   });
 
@@ -50,7 +50,7 @@ const AppProvider = ({ children }) => {
       name: "",
       email: "",
       address: "",
-      phno: "",
+      phone: "",
       password: "",
     });
   };
@@ -58,7 +58,7 @@ const AppProvider = ({ children }) => {
 
   
   return (
-    <AppContext.Provider value={{formData,setFormData,showData,deleteData,saveData,peopleList,isOnline,setIsOnline}}>
+    <AppContext.Provider value={{formData,setFormData,showData,deleteData,saveData,peopleList,isOnline,setIsOnline,setPeopleList,BASE_URL}}>
       {children}
     </AppContext.Provider>
   );
