@@ -36,7 +36,7 @@ const AppProvider = ({ children }) => {
             await axios.post(`${BASE_URL}saveUser`, formData);
             alert(" You Data Successfully Stored In DataBase")
         } catch (error) {
-            alert("Sorry , Don't Have Server")
+            alert("Sorry , Don't Have Server now /n Disconnect Your Internet Then Try")
             
         }
     } else {
